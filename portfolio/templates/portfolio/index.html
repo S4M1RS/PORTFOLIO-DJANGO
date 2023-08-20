@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block start %}
+
+<!-- Banner section -->
+<section id="banner" class="js-fullheight">
+   <div class="flexslider js-fullheight">
+      <!-- Social -->
+      <ul class="list-unstyled ml-5 mt-3 position-relative social-links">
+         <li class="mb-3"><a href="https://www.facebook.com/warflyer3456/"><i class="fab fa-facebook-f"></i></a></li>
+         <li class="mb-3"><a href="https://www.instagram.com/s4mirstha/"><i class="fab fa-instagram"></i></a></li>
+      </ul>
+      <!-- Slider -->
+      <ul class="slides">
+         <li style="background-image: url('static/images/hero.jpg');">
+            <div class="overlay-gradient"></div>
+
+            {% if hero %}
+            <div class="container">
+               <div class="col-md-8 js-fullheight slider-text">
+                  <div class="slider-text-inner">
+                     <div class="desc">
+                        <h2>I'm {{ hero.name }}!</h2>
+                        <h3>I am a
+                           <span id="typed-slide-1"></span>
+                           <span id="typed-strings-slide-1">
+                              {% for role in roles%}
+                              <span>{{role}}</span>
+                              {% endfor %}
+                           </span>
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {% endif %}
+         </li>
+      </ul>
+   </div>
+</section>
+<!-- End Banner Section -->
+
+<!-- About Section -->
+<section id="about">
+   <div class="container">
+      <div class="row">
+
+         <div class="col-md-12">
+            <div class="post-entry">
+
+               {% if aboutme %}
+               <div class="col-md-6">
+                  <div class="header-page-about">
+                     <h2 class="intro-heading">About Me</h2>
+                  </div>
+                  <p>{{aboutme.description}}</p>
+                  <div class="col-md-6 col-sm-4 no-padding">
+                     <ul>
+                        <li><span>Name : </span> {{hero.name}}</li>
+                        <li><span>Job : </span> {{aboutme.job}}</li>
+                     </ul>
+                  </div>
+                  <div class="col-md-6 col-sm-4 no-padding">
+                     <ul>
+                        <li><span>Email : </span> <a href="#">{{aboutme.email}}</a></li>
+                        <li><span>Phone : </span> <a href="#"> {{aboutme.phone}}</a></li>
+                     </ul>
+                  </div>
+               </div>
+               {% endif %}
+
+
+
+               <div class="col-md-6">
+                  <div class="post-image" style="background-image: url(images/profile-pic.jpg);"></div>
+                  <div class="display-tc">
+                     <div class="desc">
+                        <h3>My skill</h3>
+                        {% for skill in skills %}
+                        <div class="skill-item">
+                           <h5>{{skill.skillname}}</h5><span>{{skill.level}}%</span>
+                           <div class="progress" data-percent="{{skill.level}}%">
+                              <div class="progress-bar bar-null" role="progressbar" aria-valuenow="{{skill.level}}"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: {{skill.level}}%;"></div>
+                           </div>
+                        </div>
+                        {% endfor %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+</section>
+<!-- End About Section -->
+
+<!-- Resume Section -->
+<section id="resume" class="bg-dark bg-dots">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-8 col-md-offset-2 text-center heading">
+            <div class="header-page">
+               <h2>My Resume</h2>
+               <span></span>
+            </div>
+            <span class="heading-meta-sub">RESUME</span>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-12">
+
+            {% for resume in resumes %}
+            <div class="col-md-6">
+               <div class="item mb-40">
+                  <h4>{{resume.title}}</h4>
+                  <span class="meta">{{resume.duration}}</span>
+                  <h5>{{resume.subtitle}}</h5>
+                  <p>{{resume.description}}</p>
+               </div>
+            </div>
+            {% endfor %}
+
+         </div>
+      </div>
+   </div>
+</section>
+<!-- End Resume Section -->
+
+{% include 'portfolio/services.html' %}
+
+
+<!-- Works Section -->
+<section id="work" class="bg-light">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-8 col-md-offset-2 text-center heading">
+            <div class="header-page">
+               <h2>My Projects</h2>
+               <span></span>
+            </div>
+            <span class="heading-meta-sub">PORTFOLIO</span>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-12 px-25 text-center">
+            <ul class="work-filter">
+               <li class="filter all active" data-filter="*">All</li>
+               <li class="filter" data-filter=".web">Web</li>
+               <li class="filter" data-filter=".mobile">Mobile</li>
+            </ul>
+         </div>
+         <div class="col-lg-12">
+            <div class="work-gallery">
+               {% for project in projects %}
+               <div class="col-lg-4 col-md-6 col-sm-12 all {{ project.category }}">
+                  <div class="work">
+                     <img class="img-fluid" src="{{project.cover_image.url}}" alt="projectimage">
+                     <div class="desc">
+                        <div class="con">
+                           <h3><a>{{project.title}}</a></h3>
+                           <span>{{project.subtitle}}</span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!-- End Works Section -->
+
+
+<!-- Contact Section -->
+<section id="contact" class="bg-light">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-8 col-md-offset-2 text-center heading">
+            <div class="header-page">
+               <h2>Get In Touch</h2>
+               <span></span>
+            </div>
+            <span class="heading-meta-sub">CONTACT</span>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-3 col-md-push-1">
+            <ul class="contact-info">
+               <li><i class="fas fa-map-marked-alt"></i>{{hero.location}}</li>
+               <li><i class="fas fa-phone-alt"></i>{{hero.phone}}</li>
+               <li><i class="fas fa-envelope"></i><a href="#">{{hero.email}}</a></li>
+            </ul>
+         </div>
+         <div class="col-md-7 col-md-push-1">
+            <div class="row">
+               <form id="contactForm" method="POST">
+                  {% csrf_token %}
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Name" name="name">
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Email" name="email">
+                     </div>
+                  </div>
+                  <div class="col-md-12">
+                     <div class="form-group">
+                        <textarea name="message" class="form-control" id="message" cols="30" rows="7"
+                           placeholder="Message"></textarea>
+                     </div>
+                  </div>
+                  <div class="col-md-12">
+                     <div class="form-group text-right">
+                        <input type="submit" value="Send Message" class="btn btn-primary" id="submitButton">
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!-- End Contact Section -->
+
+</div>
+{% endblock %}
