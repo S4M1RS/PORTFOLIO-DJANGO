@@ -14,6 +14,7 @@ from pathlib import Path
 import cloudinary_storage, cloudinary
 import os
 from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,20 +80,20 @@ WSGI_APPLICATION = 'myportfolio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
-#     'default': dj_database_url.config(
-#         # Feel free to alter this value to suit your needs.
-#         default='postgresql://postgres:postgres@localhost:5432/mysite',
-#         conn_max_age=600
-#     )
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
 # }
+
+DATABASES = {
+    'default': dj_database_url.parse(
+        config('DATABASE_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+}
 
 
 # Password validation
@@ -135,13 +136,13 @@ STATICFILES_DIRS = [
 ]
 
 
-EMAIL_BACKEND= "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST= "smtp.gmail.com"
-EMAIL_HOST_USER= "np03cs4s220196@heraldcollege.edu.np"
-EMAIL_HOST_PASSWORD= "dwxjzjdqwumpzdqu"
-EMAIL_PORT= 587
-EMAIL_USE_TLS= True
-DEFAULT_FROM_EMAIL= "np03cs4s220196@heraldcollege.edu.np"
+EMAIL_BACKEND= config('EMAIL_BACKEND')
+EMAIL_HOST= config('EMAIL_HOST')
+EMAIL_HOST_USER= config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD= config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT= config('EMAIL_PORT')
+EMAIL_USE_TLS= config('EMAIL_USE_TLS')
+DEFAULT_FROM_EMAIL= config('DEFAULT_FROM_EMAIL')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -151,9 +152,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # cloudinary configurations
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dnv5cwxrx',
-    'API_KEY': '389587271354295',
-    'API_SECRET': 'FZU1Y5_tcMl6MRhRG54jrJ6un-4',
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET'),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+#Production
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True

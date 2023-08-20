@@ -26,14 +26,14 @@ class Aboutme(models.Model):
         return f"About Me for {self.hero.name}"
     
 class Skill(models.Model):
-    hero = models.ManyToManyField(Hero)
+    hero = models.ForeignKey(Hero, on_delete=models.CASCADE, null=True)
     skillname = models.CharField(max_length=100)
     level = models.IntegerField()
     def __str__(self):
         return f"{self.skillname}"
     
 class Resume(models.Model):
-    hero = models.ManyToManyField(Hero)
+    hero = models.ForeignKey(Hero, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
     duration = models.CharField(max_length=50)
     subtitle = models.CharField(max_length=100)
